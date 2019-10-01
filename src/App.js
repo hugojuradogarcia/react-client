@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/*import React from 'react';
+import './App.css';*/
+import React, {Component} from 'react';
+import Contacts from './components/categories';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+        <Contacts categories={this.state.categories} />
+    )
+  }
+
+  state = {
+    categories: []
+  };
+
+  componentDidMount() {
+    fetch('https://192.168.10.55:6002/v1/categories'/*, {
+            headers:{
+                'Access-Control-Allow-Origin':'*',
+                'Access-Control-Allow-Methods':'GET, POST, PUT, DELETE',
+                'Access-Control-Allow-Headers':'Origin, X-Requested-With, Content-Type, Accept'}
+            }*/)
+        .then(res => res.json())
+        .then((data) => {
+          this.setState({ categories: data })
+        })
+        .catch(console.log)
+  }
 }
 
 export default App;
